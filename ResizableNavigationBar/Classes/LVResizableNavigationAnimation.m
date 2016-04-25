@@ -93,7 +93,7 @@
   CGRect toVCStartFrame = toVC.view.frame;
   //adjust target view controller to left (pop) or to right (push) of current view controller
   toVCStartFrame.origin.x    = self.pushing ? toVCStartFrame.size.width : -(toVCStartFrame.size.width);
-  toVCStartFrame.origin.y    = fromVC.view.frame.origin.y;
+    toVCStartFrame.origin.y    = toVCNavHeight + LVStatusBarHeight;
   toVCStartFrame.size.height = fromVC.view.frame.size.height;
   
   //calculate navigation bar frame
@@ -104,8 +104,8 @@
   //target view controller final frame
   CGRect toVCEndFrame      = toVCStartFrame;
   toVCEndFrame.origin.x    = 0;
-  toVCEndFrame.origin.y    = toVCNavHeight + LVStatusBarHeight;
-  toVCEndFrame.size.height = toVC.navigationController.view.frame.size.height - toVCNavHeight - LVStatusBarHeight;
+//  toVCEndFrame.origin.y    = toVCNavHeight + LVStatusBarHeight;
+//  toVCEndFrame.size.height = toVC.navigationController.view.frame.size.height - toVCNavHeight - LVStatusBarHeight;
   
   if (navBar.translucent) {
     toVCStartFrame.origin.y    =
@@ -124,8 +124,8 @@
   //current view controller final frame to right (pop) or to left (push)
   CGRect fromVCEndFrame      = fromVC.view.frame;
   fromVCEndFrame.origin.x    = self.pushing ? -(fromVCEndFrame.size.width) : fromVCEndFrame.size.width;
-  fromVCEndFrame.origin.y    = toVCEndFrame.origin.y;
-  fromVCEndFrame.size.height = toVCEndFrame.size.height;
+//  fromVCEndFrame.origin.y    = toVCEndFrame.origin.y;
+//  fromVCEndFrame.size.height = toVCEndFrame.size.height;
   
   
   
@@ -160,21 +160,24 @@
                         delay:0.0
                       options:UIViewAnimationOptionCurveLinear
                    animations:^{
-                     originalSubHeaderView.frame = endFrameForOldHeader;
+                     originalSubHeaderView.frame = endFrameForNewSubHeader;
                      newSubHeaderView.frame      = endFrameForNewSubHeader;
                      //adjust colors
                      navBar.barTintColor                              = color;
                      [navBar sizeToFit];
                      //adjust frames
 //                     navBar.frame      = navFrame;
-                     toVC.view.frame   = toVCEndFrame;
+                     
                      fromVC.view.frame = fromVCEndFrame;
+                       toVC.view.frame   = toVCEndFrame;
                      
                    } completion:^(BOOL finished) {
                        
                        [UIView animateWithDuration:0.1 animations:^{
                            navBar.alpha = 1;
+                           
                        }];
+                       
                        
                      //cleanup
                      [originalSubHeaderView removeFromSuperview];
