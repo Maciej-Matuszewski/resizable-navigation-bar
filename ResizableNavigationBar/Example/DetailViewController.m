@@ -32,4 +32,10 @@
     return [UIColor purpleColor];
 }
 
+- (UIView *)resizableNavigationBarControllerSubHeaderView{
+    UILabel *label = [[UILabel alloc] init];
+    [label setText:@"TEST"];
+    return label;
+}
+
 @end

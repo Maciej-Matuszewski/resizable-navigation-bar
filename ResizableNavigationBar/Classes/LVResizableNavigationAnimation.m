@@ -124,8 +124,6 @@
   //current view controller final frame to right (pop) or to left (push)
   CGRect fromVCEndFrame      = fromVC.view.frame;
   fromVCEndFrame.origin.x    = self.pushing ? -(fromVCEndFrame.size.width) : fromVCEndFrame.size.width;
-//  fromVCEndFrame.origin.y    = toVCEndFrame.origin.y;
-//  fromVCEndFrame.size.height = toVCEndFrame.size.height;
   
   
   
@@ -156,11 +154,12 @@
     BOOL toVCHidesBackButton = toVC.navigationItem.hidesBackButton;
     toVC.navigationItem.hidesBackButton = YES;
     navBar.alpha = 0;
+    [newSubHeaderView setFrame:CGRectMake(newSubHeaderView.frame.origin.x, endFrameForNewSubHeader.origin.y, newSubHeaderView.frame.size.width, newSubHeaderView.frame.size.height)];
   [UIView animateWithDuration:LVAnimationDuration
                         delay:0.0
                       options:UIViewAnimationOptionCurveLinear
                    animations:^{
-                     originalSubHeaderView.frame = endFrameForNewSubHeader;
+                     [originalSubHeaderView setFrame:CGRectMake(endFrameForOldHeader.origin.x, originalSubHeaderView.frame.origin.y, endFrameForOldHeader.size.width, endFrameForOldHeader.size.height)];
                      newSubHeaderView.frame      = endFrameForNewSubHeader;
                      //adjust colors
                      navBar.barTintColor                              = color;
