@@ -155,7 +155,7 @@
     fromVC.navigationItem.hidesBackButton = YES;
     BOOL toVCHidesBackButton = toVC.navigationItem.hidesBackButton;
     toVC.navigationItem.hidesBackButton = YES;
-  
+    navBar.alpha = 0;
   [UIView animateWithDuration:LVAnimationDuration
                         delay:0.0
                       options:UIViewAnimationOptionCurveLinear
@@ -166,11 +166,16 @@
                      navBar.barTintColor                              = color;
                      [navBar sizeToFit];
                      //adjust frames
-                     navBar.frame      = navFrame;
+//                     navBar.frame      = navFrame;
                      toVC.view.frame   = toVCEndFrame;
                      fromVC.view.frame = fromVCEndFrame;
                      
                    } completion:^(BOOL finished) {
+                       
+                       [UIView animateWithDuration:0.1 animations:^{
+                           navBar.alpha = 1;
+                       }];
+                       
                      //cleanup
                      [originalSubHeaderView removeFromSuperview];
                      [self setExtraHeightForViewController:toVC];
